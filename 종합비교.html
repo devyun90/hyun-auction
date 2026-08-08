@@ -28,16 +28,19 @@ th { background: #f8f9fa; font-weight: 600; white-space: nowrap; }
 .comparison th { background: #2c3e50; color: #fff; text-align: center; }
 .comparison td { text-align: center; }
 .note { color: #7f8c8d; font-size: 0.8rem; margin-top: 1rem; font-style: italic; }
-.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; }
+.table-wrap::after { content: "← 스크롤 →"; display: none; text-align: center;
+  font-size: 0.7rem; color: #95a5a6; padding: 0.3rem 0; }
 @media (max-width: 768px) {
   body { padding: 0.8rem; }
   .container { max-width: 100%; }
-  table { font-size: 0.75rem; }
+  table { font-size: 0.75rem; min-width: 600px; }
   th, td { padding: 0.35rem 0.4rem; }
   .section { padding: 0.8rem; }
   .header h1 { font-size: 1.3rem; }
   .card-links { gap: 0.3rem; }
   .card-links a { font-size: 0.7rem; padding: 2px 6px; }
+  .table-wrap::after { display: block; }
 }
 @media print { body { padding: 0; background: #fff; } .section { box-shadow: none; break-inside: avoid; } }
 
@@ -136,6 +139,7 @@ th { background: #f8f9fa; font-weight: 600; white-space: nowrap; }
 
     <div class="section">
         <h2>⚠️ 낙찰자 인수리스크 체크리스트</h2>
+        <div class="table-wrap">
         <table>
             <thead><tr><th>물건</th><th>기준일(말소기준)</th><th>대항력 임차인</th><th>체납 관리비</th><th>미납 세금</th><th>유치권/법정지상권</th></tr></thead>
             <tbody>
@@ -172,6 +176,7 @@ th { background: #f8f9fa; font-weight: 600; white-space: nowrap; }
                 <td><span style="color:#95a5a6;">해당없음(아파트)</span></td>
             </tr></tbody>
         </table>
+        </div>
         <div class="tenant-note">
             <strong>확인 방법:</strong><br>
             • 대항력 임차인: 현황조사서 + 전입세대확인서에서 기준일 이전 전입자 확인<br>
