@@ -65,8 +65,8 @@ tr.sale { background: #fef9e7; }
         <p class="explain">대법원 경매정보 사이트에서 사건번호 [2025타경2651] 검색 후 확인 가능</p>
         <div class="links-grid">
             <a href="https://www.courtauction.go.kr/pgj/index.on?w2xPath=/pgj/ui/pgj200/PGJ213M01.xml" target="_blank" class="link-card"><span class="link-icon">🔍</span><span class="link-title">물건상세조회</span><span class="link-desc">대법원 사이트에서 상세 확인</span></a>
-        <div class="link-card disabled"><span class="link-icon">📊</span><span class="link-title">감정평가서</span><span class="link-desc">미제출</span></div>
-        <div class="link-card disabled"><span class="link-icon">🏠</span><span class="link-title">현황조사서</span><span class="link-desc">미제출</span></div>
+        <a href="https://www.courtauction.go.kr/pgj/index.on?w2xPath=/pgj/ui/pgj200/PGJ213M01.xml" target="_blank" class="link-card available"><span class="link-icon">📊</span><span class="link-title">감정평가서</span><span class="link-desc">제출 완료</span></a>
+        <a href="https://www.courtauction.go.kr/pgj/index.on?w2xPath=/pgj/ui/pgj200/PGJ213M01.xml" target="_blank" class="link-card available"><span class="link-icon">🏠</span><span class="link-title">현황조사서</span><span class="link-desc">제출 완료</span></a>
         <div class="link-card disabled"><span class="link-icon">📋</span><span class="link-title">매각물건명세서</span><span class="link-desc">미확인</span></div>
         </div>
     </div>
@@ -187,7 +187,20 @@ tr.sale { background: #fef9e7; }
     
     <div class="section">
         <h2>문건/서류 내역</h2>
-        <p class="empty">문건 정보 없음</p>
+        <table>
+            <thead><tr><th>문건 종류</th><th>접수일</th><th>상태</th></tr></thead>
+            <tbody>
+            <tr>
+                <td>📊 <strong>감정평가서</strong></td>
+                <td>2025.09.05</td>
+                <td>제출</td>
+            </tr>
+            <tr>
+                <td>🏠 <strong>현황조사보고서</strong></td>
+                <td>2025.09.01</td>
+                <td>제출</td>
+            </tr></tbody>
+        </table>
     </div>
 
     <div class="section source">
