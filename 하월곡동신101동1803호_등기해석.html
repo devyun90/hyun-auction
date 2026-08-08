@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>등기부등본 해석 - 하월곡동신101동1803호</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+       background: #f8f9fa; color: #2c3e50; line-height: 1.7; padding: 2rem; }
+.header { text-align: center; padding: 2rem 0; margin-bottom: 1.5rem; border-bottom: 3px solid #2c3e50; }
+.header h1 { font-size: 1.5rem; color: #2c3e50; }
+.property-name { font-size: 1.3rem; font-weight: 700; color: #2980b9; margin: 0.5rem 0; }
+.meta { color: #7f8c8d; font-size: 0.85rem; }
+.section { background: #fff; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem;
+           box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.section h2 { font-size: 1.15rem; color: #2c3e50; margin-bottom: 0.5rem;
+              padding-bottom: 0.4rem; border-bottom: 2px solid #3498db; }
+.explain { color: #7f8c8d; font-size: 0.85rem; margin-bottom: 1rem; font-style: italic; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th, td { padding: 0.6rem; text-align: left; border-bottom: 1px solid #ecf0f1; }
+th { background: #f8f9fa; font-weight: 600; white-space: nowrap; width: 100px; }
+.interpret { color: #7f8c8d; font-size: 0.82rem; font-style: italic; }
+.entries { display: flex; flex-direction: column; gap: 0.8rem; }
+.entry { border: 1px solid #e8e8e8; border-radius: 8px; padding: 1rem; transition: all 0.2s; }
+.entry:hover { border-color: #3498db; box-shadow: 0 2px 8px rgba(52,152,219,0.1); }
+.entry.deleted { opacity: 0.5; background: #fafafa; border-style: dashed; }
+.entry-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+.rank { background: #2c3e50; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+.purpose { font-weight: 700; color: #2c3e50; font-size: 0.95rem; }
+.date { color: #7f8c8d; font-size: 0.82rem; margin-left: auto; }
+.badge-deleted { background: #e74c3c; color: #fff; padding: 1px 6px; border-radius: 3px; font-size: 0.72rem; }
+.entry-detail { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; padding-left: 0.5rem; }
+.entry-detail div { margin: 0.15rem 0; }
+.amount-info { color: #e67e22; font-weight: 500; }
+.interpretation { background: #eaf6ff; border-radius: 6px; padding: 0.5rem 0.8rem;
+                  font-size: 0.83rem; color: #2980b9; }
+.icon { margin-right: 0.3rem; }
+.summary ul { list-style: none; padding: 0; }
+.summary li { padding: 0.4rem 0; padding-left: 1.2rem; position: relative; font-size: 0.9rem; }
+.summary li::before { content: "•"; position: absolute; left: 0; color: #3498db; font-weight: bold; }
+.empty { color: #95a5a6; font-style: italic; }
+.note { color: #7f8c8d; font-size: 0.82rem; margin-top: 1rem; font-style: italic; }
+
+/* 종합의견 */
+.opinion-section h2 { border-color: #e74c3c; }
+.opinion-summary { margin-bottom: 1rem; }
+.opinion-summary h4 { font-size: 0.95rem; color: #2c3e50; margin-bottom: 0.3rem; }
+.opinion-summary ul { list-style: none; padding: 0; }
+.opinion-summary li { padding: 0.3rem 0; padding-left: 1rem; position: relative; font-size: 0.9rem; }
+.opinion-summary li::before { content: "▶"; position: absolute; left: 0; color: #e67e22; font-size: 0.7rem; top: 0.5rem; }
+.amount-highlight { color: #e67e22; }
+.amount-danger { color: #e74c3c; font-size: 1.05rem; }
+.opinion-block { border-radius: 8px; padding: 1rem; margin-bottom: 0.8rem; }
+.opinion-block h4 { font-size: 0.92rem; margin-bottom: 0.4rem; }
+.opinion-block ul { list-style: none; padding: 0; }
+.opinion-block li { padding: 0.2rem 0; padding-left: 1rem; position: relative; font-size: 0.85rem; }
+.opinion-block.safe { background: #eafaf1; border-left: 4px solid #27ae60; }
+.opinion-block.safe h4 { color: #27ae60; }
+.opinion-block.safe li::before { content: "✓"; position: absolute; left: 0; color: #27ae60; }
+.opinion-block.danger { background: #fdedec; border-left: 4px solid #e74c3c; }
+.opinion-block.danger h4 { color: #e74c3c; }
+.opinion-block.danger li::before { content: "⚠"; position: absolute; left: 0; color: #e74c3c; font-size: 0.8rem; }
+.opinion-block.warning { background: #fef9e7; border-left: 4px solid #f39c12; }
+.opinion-block.warning h4 { color: #f39c12; }
+.opinion-block.warning li::before { content: "❗"; position: absolute; left: 0; color: #f39c12; }
+.opinion-block.info { background: #eaf6ff; border-left: 4px solid #3498db; }
+.opinion-block.info h4 { color: #3498db; }
+.opinion-note { font-size: 0.82rem; color: #7f8c8d; font-style: italic; margin-bottom: 0.3rem; }
+.opinion-warn { font-size: 0.9rem; margin-top: 0.5rem; color: #e74c3c; }
+
+/* 용어 링크 */
+a.term-link { color: #2980b9; text-decoration: none; border-bottom: 1px dashed #2980b9;
+              cursor: pointer; transition: all 0.2s; }
+a.term-link:hover { color: #e74c3c; border-bottom-color: #e74c3c; }
+
+/* 용어 설명 (glossary) */
+.glossary-section { background: #f0f4f8; }
+.glossary-section h2 { border-color: #7f8c8d; }
+.glossary-list { padding: 0; }
+.glossary-item { padding: 0.7rem 0; border-bottom: 1px solid #dfe6e9; }
+.glossary-item:last-child { border-bottom: none; }
+.glossary-item dt { font-weight: 700; color: #2c3e50; font-size: 0.92rem; margin-bottom: 0.2rem; }
+.glossary-item dd { font-size: 0.85rem; color: #555; line-height: 1.6; margin-left: 0; }
+.glossary-item:target { background: #fff3cd; border-radius: 6px; padding: 0.7rem; margin: -0.2rem;
+                         box-shadow: 0 0 0 2px #f39c12; }
+
+@media print { body { padding: 0; background: #fff; } .section { box-shadow: none; break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div style="max-width:900px; margin:0 auto;">
+
+    <div style="margin-bottom:0.8rem;"><a href="종합비교.html" style="font-size:0.85rem;color:#3498db;text-decoration:none;">← 종합비교로 돌아가기</a></div>
+    <div class="header">
+        <h1>등기부등본 해석 보고서</h1>
+        <div class="property-name">하월곡동신101동1803호</div>
+        <div class="meta">
+            서울특별시 성북구 하월곡동 219 동신아파트 제101동 제18층 제1803호<br>
+            사건번호: 2025타경12287 | 생성일: 2026-08-08
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>표제부 (부동산의 기본 정보)</h2>
+        <p class="explain">표제부는 건물의 물리적 현황을 기록한 부분입니다.</p>
+        <table>
+            <tr><th>소재지</th><td>서울특별시 성북구 하월곡동 219 동신아파트 제101동 제18층 제1803호</td>
+                <td class="interpret">이 건물의 위치 (지번 주소)</td></tr>
+            <tr><th>동호수</th><td>101동 1803호</td>
+                <td class="interpret">아파트 동과 호수</td></tr>
+            <tr><th>전용면적</th><td>84.78㎡</td>
+                <td class="interpret">실제 사용 가능한 면적 (벽 안쪽 기준)</td></tr>
+            <tr><th>도로명주소</th><td>1층810.40㎡</td>
+                <td class="interpret">우편 배송 등에 사용하는 도로명 주소</td></tr>
+            <tr><th>대지권비율</th><td>17751분의 25.71</td>
+                <td class="interpret">전체 대지 중 이 호수가 차지하는 토지 지분</td></tr>
+        </table>
+    </div>
+
+    <div class="section opinion-section">
+        <h2>종합의견</h2>
+        <p class="explain">등기부등본을 바탕으로 자동 분석한 요약입니다. 참고용이며, 최종 판단은 전문가와 상의하세요.</p>
+
+        <div class="opinion-summary">
+            <h4>채무 현황</h4>
+            <ul><li><a href="#term-채권최고액" class="term-link">채권최고액</a> 합계: <strong class="amount-highlight">12억 2,600만원</strong> (7건)</li><li><a href="#term-가압류" class="term-link">가압류</a> 청구금액 합계: <strong class="amount-highlight">2억 4,300만원</strong> (1건)</li><li>등기부상 채무 총액: <strong class="amount-danger">14억 6,900만원</strong></li></ul>
+        </div>
+
+        
+            <div class="opinion-block info">
+                <h4><a href="#term-말소기준권리" class="term-link">말소기준권리</a></h4>
+                <p>을구 1번 — <a href="#term-근저당권설정" class="term-link">근저당권설정</a> (2000-09-18)</p>
+                <p class="opinion-note">이 권리를 기준으로, 이후 설정된 권리는 소멸 / 이전 설정된 일부 권리는 인수됩니다.</p>
+            </div>
+        
+            <div class="opinion-block safe">
+                <h4>낙찰 시 사라지는 권리 (소멸)</h4>
+                <p class="opinion-note">아래 권리는 경매로 매각되면 자동 말소됩니다. 낙찰자 부담 없음.</p>
+                <ul><li>갑구 8번 <a href="#term-가압류" class="term-link">가압류</a> (2억 4,300만원)</li><li>갑구 9번 <a href="#term-임의경매개시결정" class="term-link">임의경매개시결정</a></li><li>을구 1번 <a href="#term-근저당권설정" class="term-link">근저당권설정</a> (6,000만원)</li><li>을구 3번 <a href="#term-근저당권설정" class="term-link">근저당권설정</a> (2억 2,000만원)</li><li>을구 5번 <a href="#term-근저당권설정" class="term-link">근저당권설정</a> (2억 1,600만원)</li><li>을구 6번 <a href="#term-근저당권설정" class="term-link">근저당권설정</a> (1억 3,000만원)</li><li>을구 7번 <a href="#term-근저당권설정" class="term-link">근저당권설정</a> (2억 4,000만원)</li><li>을구 9번 <a href="#term-근저당권설정" class="term-link">근저당권설정</a> (2억 4,000만원)</li><li>을구 10번 <a href="#term-근저당권설정" class="term-link">근저당권설정</a> (1억 2,000만원)</li></ul>
+            </div>
+        
+            <div class="opinion-block safe">
+                <h4>낙찰자가 떠안는 권리 (인수)</h4>
+                <p>인수할 권리 없음 — 추가 부담 없이 깨끗하게 소유권 취득 가능</p>
+            </div>
+        
+            <div class="opinion-block warning">
+                <h4>확인 필요 사항</h4>
+                <ul><li>임차인 현황(전입세대 열람, 확정일자)은 등기부만으로 확인 불가 — 별도 조사 필요</li></ul>
+            </div>
+    </div>
+
+    <div class="section">
+        <h2>갑구 (소유권에 관한 사항)</h2>
+        <p class="explain">갑구는 '이 집의 주인이 누구인지'와 소유권을 제한하는 권리(<a href="#term-압류" class="term-link">압류</a>, <a href="#term-가압류" class="term-link">가압류</a> 등)를 기록합니다.</p>
+        <div class="entries">
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">1번</span>
+                <span class="purpose"><a href="#term-소유권이전" class="term-link">소유권이전</a></span>
+                
+                <span class="date">2001-05-30</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> -</div>
+                <div><strong>원인:</strong> 매매 — 사고파는 계약으로 소유권이 넘어간 것</div>
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 매매로 소유권이 넘어갔습니다. 새 주인: (확인필요)
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">2번</span>
+                <span class="purpose"><a href="#term-소유권이전" class="term-link">소유권이전</a></span>
+                
+                <span class="date">2001-05-30</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 김희자</div>
+                <div><strong>원인:</strong> 매매 — 사고파는 계약으로 소유권이 넘어간 것</div>
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 매매로 소유권이 넘어갔습니다. 새 주인: 김희자
+            </div>
+        </div>
+        <div class="entry deleted">
+            <div class="entry-header">
+                <span class="rank">3번</span>
+                <span class="purpose"></span>
+                <span class="badge-deleted">말소</span>
+                <span class="date">2001-12-22</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> -</div>
+                
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 등기 기록
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">4번</span>
+                <span class="purpose"><a href="#term-소유권이전" class="term-link">소유권이전</a></span>
+                
+                <span class="date">2001-12-22</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 김희자</div>
+                <div><strong>원인:</strong> 매매 — 사고파는 계약으로 소유권이 넘어간 것</div>
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 매매로 소유권이 넘어갔습니다. 새 주인: 김희자
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">5번</span>
+                <span class="purpose"><a href="#term-소유권이전" class="term-link">소유권이전</a></span>
+                
+                <span class="date">2010-02-11</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 이종수</div>
+                <div><strong>원인:</strong> 증여 — 무상(공짜)으로 소유권을 넘겨준 것</div>
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 무상 증여로 소유권이 넘어갔습니다. 새 주인: 이종수
+            </div>
+        </div>
+        <div class="entry deleted">
+            <div class="entry-header">
+                <span class="rank">6번</span>
+                <span class="purpose"><a href="#term-소유권이전" class="term-link">소유권이전</a></span>
+                <span class="badge-deleted">말소</span>
+                <span class="date">2010-07-01</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 삼성카드 주식회사</div>
+                <div><strong>원인:</strong> 매매 — 사고파는 계약으로 소유권이 넘어간 것</div>
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 매매로 소유권이 넘어갔습니다. 새 주인: 삼성카드 주식회사
+            </div>
+        </div>
+        <div class="entry deleted">
+            <div class="entry-header">
+                <span class="rank">7번</span>
+                <span class="purpose"><a href="#term-가처분" class="term-link">가처분</a></span>
+                <span class="badge-deleted">말소</span>
+                <span class="date">2010-08-30</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> -</div>
+                
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 소유권 분쟁으로 법원이 처분 금지 명령. 낙찰자가 인수할 수 있어 위험합니다!
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">8번</span>
+                <span class="purpose"><a href="#term-가압류" class="term-link">가압류</a></span>
+                
+                <span class="date">2024-11-13</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 한국무역보험공사</div>
+                
+                <div class="amount-info">청구금액: 2억 4,300만원</div>
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 채권자 한국무역보험공사이 재산을 묶어놓았습니다 (청구금액 2억 4,300만원). 경매 시 소멸됩니다.
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">9번</span>
+                <span class="purpose"><a href="#term-임의경매개시결정" class="term-link">임의경매개시결정</a></span>
+                
+                <span class="date">2025-04-25</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 제1969528호 서울북부지방법 유에스아이제삼차유동화전문유한회사(</div>
+                <div><strong>원인:</strong> 경매 — 법원 경매로 새 주인이 된 것</div>
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 근저당권자가 경매를 신청했습니다. 이 물건이 경매에 나온 직접 원인입니다.
+            </div>
+        </div></div>
+    </div>
+
+    <div class="section">
+        <h2>을구 (소유권 이외의 권리)</h2>
+        <p class="explain">을구는 담보권(<a href="#term-근저당권설정" class="term-link">근저당권설정</a>), <a href="#term-전세권설정" class="term-link">전세권설정</a>, 지상권 등 소유권 외의 권리를 기록합니다. 경매 시 핵심 분석 대상입니다.</p>
+        <div class="entries">
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">1번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                
+                <span class="date">2000-09-18</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 주식회사하나은행</div>
+                <div><strong>채무자:</strong> 박유영</div>
+                <div class="amount-info"><a href="#term-채권최고액" class="term-link">채권최고액</a>: <strong>6,000만원</strong></div>
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 6,000만원. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry deleted">
+            <div class="entry-header">
+                <span class="rank">2번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                <span class="badge-deleted">말소</span>
+                <span class="date">2001-06-25</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> -</div>
+                
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 ?. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">3번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                
+                <span class="date">2004-10-28</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 중소기업은행</div>
+                <div><strong>채무자:</strong> 이종수</div>
+                <div class="amount-info"><a href="#term-채권최고액" class="term-link">채권최고액</a>: <strong>2억 2,000만원</strong></div>
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 2억 2,000만원. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry deleted">
+            <div class="entry-header">
+                <span class="rank">4번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                <span class="badge-deleted">말소</span>
+                <span class="date">2007-09-07</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> -</div>
+                
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 ?. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">5번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                
+                <span class="date">2007-09-07</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 주식회사우리은행</div>
+                <div><strong>채무자:</strong> 주식회사 제이스멤버스</div>
+                <div class="amount-info"><a href="#term-채권최고액" class="term-link">채권최고액</a>: <strong>2억 1,600만원</strong></div>
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 2억 1,600만원. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">6번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                
+                <span class="date">2008-09-12</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 대한화섬주식회사</div>
+                <div><strong>채무자:</strong> 주식회사제이스멤버스</div>
+                <div class="amount-info"><a href="#term-채권최고액" class="term-link">채권최고액</a>: <strong>1억 3,000만원</strong></div>
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 1억 3,000만원. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">7번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                
+                <span class="date">2010-06-15</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 주식회사우리은행</div>
+                <div><strong>채무자:</strong> 주식회사제이스멤버스</div>
+                <div class="amount-info"><a href="#term-채권최고액" class="term-link">채권최고액</a>: <strong>2억 4,000만원</strong></div>
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 2억 4,000만원. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry deleted">
+            <div class="entry-header">
+                <span class="rank">8번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                <span class="badge-deleted">말소</span>
+                <span class="date">2020-02-27</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> -</div>
+                
+                
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 ?. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">9번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                
+                <span class="date">2020-03-30</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 주식회사우리은행</div>
+                <div><strong>채무자:</strong> 주식회사제이스멤버스</div>
+                <div class="amount-info"><a href="#term-채권최고액" class="term-link">채권최고액</a>: <strong>2억 4,000만원</strong></div>
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 2억 4,000만원. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div>
+        <div class="entry ">
+            <div class="entry-header">
+                <span class="rank">10번</span>
+                <span class="purpose"><a href="#term-근저당권설정" class="term-link">근저당권설정</a></span>
+                
+                <span class="date">2020-11-23</span>
+            </div>
+            <div class="entry-detail">
+                <div><strong>권리자:</strong> 주식회사우리은행</div>
+                <div><strong>채무자:</strong> 주식회사제이스멤버스</div>
+                <div class="amount-info"><a href="#term-채권최고액" class="term-link">채권최고액</a>: <strong>1억 2,000만원</strong></div>
+            </div>
+            <div class="interpretation">
+                <span class="icon">💡</span> 대출 담보입니다. 한도 1억 2,000만원. 실제 대출금은 이보다 적습니다(보통 한도의 77~83%).
+            </div>
+        </div></div>
+    </div>
+
+    <div class="section summary">
+        <h2>요약</h2>
+        <ul><li>소유권이 5번 이전됨</li><li>압류/가압류 1건 존재 → 채무 불이행 상태</li><li>경매개시결정 1건 → 현재 경매 진행 중</li><li>근저당 7건, 채권최고액 합계 12억 2,600만원</li></ul>
+        <p class="note">위 내용은 등기부등본 PDF 자동 파싱 결과입니다. 정확한 판단을 위해 원본을 반드시 확인하세요.</p>
+    </div>
+
+    <div class="section glossary-section" id="glossary">
+        <h2>용어 설명</h2>
+        <p class="explain">본문에서 밑줄 친 용어를 클릭하면 여기로 이동합니다. ↑ 위로 돌아가려면 브라우저 뒤로가기를 누르세요.</p>
+        <dl class="glossary-list">
+        <div class="glossary-item" id="term-근저당권설정">
+            <dt>근저당권설정</dt>
+            <dd>은행 등에서 대출받을 때, 갚지 못하면 이 부동산을 팔아 돈을 회수할 수 있도록 담보로 잡아놓는 것입니다. '채권최고액'은 실제 빌린 돈이 아니라, 이자·지연손해금까지 포함한 최대 한도(보통 대출금의 120~130%)입니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-근저당권이전">
+            <dt>근저당권이전</dt>
+            <dd>기존 근저당권을 가진 채권자가 바뀐 것입니다. 예: 은행이 대출채권을 다른 회사(유동화회사 등)에 팔면 근저당도 함께 넘어갑니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-근저당권변경">
+            <dt>근저당권변경</dt>
+            <dd>근저당 내용(채권최고액, 채무자 등)이 바뀐 것입니다. 예: 채무자가 회사를 변경하거나, 한도를 늘리는 경우.</dd>
+        </div>
+        <div class="glossary-item" id="term-근저당권말소">
+            <dt>근저당권말소</dt>
+            <dd>대출을 모두 갚아서 담보가 해제된 것입니다. 이 근저당은 더 이상 효력이 없습니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-소유권이전">
+            <dt>소유권이전</dt>
+            <dd>부동산의 주인이 바뀐 기록입니다. 매매(사고팜), 상속(돌아가신 분 → 자녀), 증여(무상으로 줌) 등의 이유로 발생합니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-소유권보존">
+            <dt>소유권보존</dt>
+            <dd>이 건물의 맨 처음 주인이 '내 것'이라고 등기한 최초 기록입니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-가압류">
+            <dt>가압류</dt>
+            <dd>돈을 빌려준 사람(채권자)이 '혹시 집을 팔아버릴까 봐' 법원에 신청해서 처분을 못하게 묶어놓은 것입니다. 경매로 팔리면 자동으로 사라집니다(소멸).</dd>
+        </div>
+        <div class="glossary-item" id="term-압류">
+            <dt>압류</dt>
+            <dd>세금을 안 냈을 때 국가(세무서·지자체)가 재산을 묶어놓는 것입니다. 경매로 팔리면 자동 소멸됩니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-임의경매개시결정">
+            <dt>임의경매개시결정</dt>
+            <dd>근저당권자(은행 등)가 '대출을 안 갚으니 집을 팔아달라'고 법원에 경매를 신청한 기록입니다. 이 물건이 경매에 나온 직접적인 원인입니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-강제경매개시결정">
+            <dt>강제경매개시결정</dt>
+            <dd>판결문(승소확정)을 받은 채권자가 경매를 신청한 것입니다. 담보 없이 빚을 받기 위한 절차입니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-경매개시결정">
+            <dt>경매개시결정</dt>
+            <dd>법원이 경매 절차를 시작한다고 결정한 기록입니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-가처분">
+            <dt>가처분</dt>
+            <dd>소유권 등에 대한 법적 분쟁이 있어, 법원이 '판결 나올 때까지 처분하지 마라'고 명령한 것입니다. 낙찰자가 떠안을 수 있어(인수) 위험합니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-예고등기">
+            <dt>예고등기</dt>
+            <dd>이 부동산에 관련된 소송이 진행 중이라는 경고 표시입니다. 소유권 분쟁 가능성을 의미합니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-전세권설정">
+            <dt>전세권설정</dt>
+            <dd>전세 계약을 등기부에 공식 등록한 것입니다. 말소기준권리보다 먼저 설정되었으면 낙찰자가 전세금을 돌려줘야 합니다(인수).</dd>
+        </div>
+        <div class="glossary-item" id="term-임차권설정">
+            <dt>임차권설정</dt>
+            <dd>임대차(월세/전세) 계약을 등기한 것입니다. 대항력과 우선변제권 여부를 확인해야 합니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-말소기준권리">
+            <dt>말소기준권리</dt>
+            <dd>경매에서 가장 중요한 개념입니다. 이 권리보다 나중에 설정된 권리는 경매로 팔리면 자동으로 사라지고(소멸), 이보다 먼저 설정된 일부 권리는 낙찰자가 떠안아야 합니다(인수). 보통 가장 먼저 설정된 근저당·압류·경매개시결정이 됩니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-채권최고액">
+            <dt>채권최고액</dt>
+            <dd>근저당에 적힌 최대 보장 금액입니다. 실제 빌린 돈(원금)이 아니라, 원금+이자+지연손해금을 모두 합친 최대 한도(보통 대출의 120~130%)입니다.</dd>
+        </div>
+        <div class="glossary-item" id="term-신탁">
+            <dt>신탁</dt>
+            <dd>소유자가 부동산을 신탁회사에 맡긴 것입니다. 개발·관리 목적이 많으며, 신탁 해지 여부 확인이 필요합니다.</dd>
+        </div></dl>
+    </div>
+</div>
+</body>
+</html>

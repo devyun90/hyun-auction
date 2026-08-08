@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>경매 물건 종합 비교</title><style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+       background: #f5f7fa; color: #2c3e50; line-height: 1.6; padding: 2rem; }
+.container { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.7rem; margin-bottom: 0.3rem; }
+h2 { font-size: 1.15rem; color: #34495e; margin-bottom: 0.8rem;
+     padding-bottom: 0.4rem; border-bottom: 2px solid #ecf0f1; }
+.header { text-align: center; padding: 1.5rem 0; border-bottom: 3px solid #3498db; margin-bottom: 1.5rem; }
+.meta { color: #7f8c8d; font-size: 0.85rem; }
+.badge { display: inline-block; color: #fff; padding: 4px 14px; border-radius: 12px;
+         font-weight: 600; font-size: 0.85rem; }
+.section { background: #fff; border-radius: 8px; padding: 1.2rem 1.4rem;
+           margin-bottom: 1.2rem; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 0.5rem; }
+th, td { padding: 0.5rem 0.6rem; text-align: left; border-bottom: 1px solid #ecf0f1; }
+th { background: #f8f9fa; font-weight: 600; white-space: nowrap; }
+.amount { text-align: right; font-weight: 600; }
+.total td { font-weight: 700; color: #2980b9; border-top: 2px solid #3498db; font-size: 0.95rem; }
+.highlight { background: #fef9e7; border-left: 4px solid #f39c12; padding: 0.8rem; border-radius: 4px; }
+.risk-list li { margin: 0.2rem 0; color: #c0392b; }
+.empty { color: #95a5a6; font-style: italic; }
+.card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 1rem; margin-bottom: 0.8rem; }
+.card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+.comparison th { background: #2c3e50; color: #fff; text-align: center; }
+.comparison td { text-align: center; }
+.note { color: #7f8c8d; font-size: 0.8rem; margin-top: 1rem; font-style: italic; }
+@media print { body { padding: 0; background: #fff; } .section { box-shadow: none; break-inside: avoid; } }
+
+.nav-table a { color: #3498db; text-decoration: none; font-size: 0.85rem; }
+.nav-table a:hover { text-decoration: underline; }
+.nav-table td { padding: 0.4rem 0.6rem; }
+</style></head>
+<body><div class="container">
+    <div class="header">
+        <h1>경매 물건 종합 비교 보고서</h1>
+        <div class="meta">2026-08-08 | 4건 분석</div>
+    </div>
+
+    <div class="section">
+        <h2>보고서 바로가기</h2>
+        <table class="nav-table">
+            <thead><tr><th>물건</th><th>권리분석</th><th>등기해석</th><th>경매정보</th></tr></thead>
+            <tbody>
+            <tr>
+                <td style="font-weight:600;">하월곡동신101동1803호</td>
+                <td><a href="하월곡동신101동1803호.html">📋 분석</a></td>
+                <td><a href="하월곡동신101동1803호_등기해석.html">📜 등기해석</a></td>
+                <td><a href="하월곡동신101동1803호_경매정보.html">⚖️ 경매정보</a></td>
+            </tr>
+            <tr>
+                <td style="font-weight:600;">공릉동신105동1803호</td>
+                <td><a href="공릉동신105동1803호.html">📋 분석</a></td>
+                <td><a href="공릉동신105동1803호_등기해석.html">📜 등기해석</a></td>
+                <td><a href="공릉동신105동1803호_경매정보.html">⚖️ 경매정보</a></td>
+            </tr>
+            <tr>
+                <td style="font-weight:600;">상계2차중앙하이츠아파트208동2302호</td>
+                <td><a href="상계2차중앙하이츠아파트208동2302호.html">📋 분석</a></td>
+                <td><a href="상계2차중앙하이츠아파트208동2302호_등기해석.html">📜 등기해석</a></td>
+                <td><a href="상계2차중앙하이츠아파트208동2302호_경매정보.html">⚖️ 경매정보</a></td>
+            </tr>
+            <tr>
+                <td style="font-weight:600;">북한산아이파크520동801호</td>
+                <td><a href="북한산아이파크520동801호.html">📋 분석</a></td>
+                <td><a href="북한산아이파크520동801호_등기해석.html">📜 등기해석</a></td>
+                <td><a href="북한산아이파크520동801호_경매정보.html">⚖️ 경매정보</a></td>
+            </tr></tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>비교표</h2>
+        <table class="comparison">
+            <thead><tr><th>물건명</th><th>사건번호</th><th>감정가</th><th>최저매각가</th><th>인수부담</th><th>예상총부담</th><th>위험등급</th></tr></thead>
+            <tbody>
+            <tr>
+                <td style="text-align:left;font-weight:600;"><a href="하월곡동신101동1803호.html" style="color:#2c3e50;text-decoration:none;border-bottom:1px dashed #3498db;">하월곡동신101동1803호</a></td>
+                <td>2025타경12287</td>
+                <td>8억 2,700만원</td>
+                <td>6억 6,160만원</td>
+                <td>-</td>
+                <td>6억 6,160만원</td>
+                <td style="color:#f39c12;font-weight:700;">주의</td>
+            </tr>
+            <tr>
+                <td style="text-align:left;font-weight:600;"><a href="공릉동신105동1803호.html" style="color:#2c3e50;text-decoration:none;border-bottom:1px dashed #3498db;">공릉동신105동1803호</a></td>
+                <td>2025타경13155</td>
+                <td>8억 1,200만원</td>
+                <td>8억 1,200만원</td>
+                <td>-</td>
+                <td>8억 1,200만원</td>
+                <td style="color:#f39c12;font-weight:700;">주의</td>
+            </tr>
+            <tr>
+                <td style="text-align:left;font-weight:600;"><a href="상계2차중앙하이츠아파트208동2302호.html" style="color:#2c3e50;text-decoration:none;border-bottom:1px dashed #3498db;">상계2차중앙하이츠아파트208동2302호</a></td>
+                <td>2025타경2651</td>
+                <td>8억 3,900만원</td>
+                <td>6억 7,120만원</td>
+                <td>-</td>
+                <td>6억 7,120만원</td>
+                <td style="color:#f39c12;font-weight:700;">주의</td>
+            </tr>
+            <tr>
+                <td style="text-align:left;font-weight:600;"><a href="북한산아이파크520동801호.html" style="color:#2c3e50;text-decoration:none;border-bottom:1px dashed #3498db;">북한산아이파크520동801호</a></td>
+                <td>2025타경549</td>
+                <td>9억 4,900만원</td>
+                <td>7억 5,920만원</td>
+                <td>-</td>
+                <td>7억 5,920만원</td>
+                <td style="color:#27ae60;font-weight:700;">안전</td>
+            </tr></tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>개별 요약</h2>
+        
+        <div class="card">
+            <h3>1. <a href="하월곡동신101동1803호.html" style="color:#2c3e50;text-decoration:none;">하월곡동신101동1803호</a> <span class="badge" style="background:#f39c12;font-size:0.75rem;">주의</span></h3>
+            <p style="font-size:0.85rem;color:#555;">말소기준: 근저당권설정(2000-09-18) | 인수 0건 / 소멸 9건 | 추가부담 없음 | 위험등급: 주의</p>
+            <p style="font-size:0.82rem;margin-top:0.3rem;">⚠️ 채권자 4명 - 배당 복잡</p>
+            <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <a href="하월곡동신101동1803호.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #3498db;border-radius:4px;text-decoration:none;color:#3498db;">📋 분석</a>
+                <a href="하월곡동신101동1803호_등기해석.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #8e44ad;border-radius:4px;text-decoration:none;color:#8e44ad;">📜 등기해석</a>
+                <a href="하월곡동신101동1803호_경매정보.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #e67e22;border-radius:4px;text-decoration:none;color:#e67e22;">⚖️ 경매정보</a>
+            </div>
+        </div>
+        <div class="card">
+            <h3>2. <a href="공릉동신105동1803호.html" style="color:#2c3e50;text-decoration:none;">공릉동신105동1803호</a> <span class="badge" style="background:#f39c12;font-size:0.75rem;">주의</span></h3>
+            <p style="font-size:0.85rem;color:#555;">말소기준: 근저당권설정(2020-08-07) | 인수 0건 / 소멸 10건 | 추가부담 없음 | 위험등급: 주의</p>
+            <p style="font-size:0.82rem;margin-top:0.3rem;">⚠️ 채권자 4명 - 배당 복잡</p>
+            <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <a href="공릉동신105동1803호.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #3498db;border-radius:4px;text-decoration:none;color:#3498db;">📋 분석</a>
+                <a href="공릉동신105동1803호_등기해석.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #8e44ad;border-radius:4px;text-decoration:none;color:#8e44ad;">📜 등기해석</a>
+                <a href="공릉동신105동1803호_경매정보.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #e67e22;border-radius:4px;text-decoration:none;color:#e67e22;">⚖️ 경매정보</a>
+            </div>
+        </div>
+        <div class="card">
+            <h3>3. <a href="상계2차중앙하이츠아파트208동2302호.html" style="color:#2c3e50;text-decoration:none;">상계2차중앙하이츠아파트208동2302호</a> <span class="badge" style="background:#f39c12;font-size:0.75rem;">주의</span></h3>
+            <p style="font-size:0.85rem;color:#555;">말소기준: 근저당권설정(1998-11-28) | 인수 0건 / 소멸 24건 | 추가부담 없음 | 위험등급: 주의</p>
+            <p style="font-size:0.82rem;margin-top:0.3rem;">⚠️ 채권자 9명 - 배당 복잡</p>
+            <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <a href="상계2차중앙하이츠아파트208동2302호.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #3498db;border-radius:4px;text-decoration:none;color:#3498db;">📋 분석</a>
+                <a href="상계2차중앙하이츠아파트208동2302호_등기해석.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #8e44ad;border-radius:4px;text-decoration:none;color:#8e44ad;">📜 등기해석</a>
+                <a href="상계2차중앙하이츠아파트208동2302호_경매정보.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #e67e22;border-radius:4px;text-decoration:none;color:#e67e22;">⚖️ 경매정보</a>
+            </div>
+        </div>
+        <div class="card">
+            <h3>4. <a href="북한산아이파크520동801호.html" style="color:#2c3e50;text-decoration:none;">북한산아이파크520동801호</a> <span class="badge" style="background:#27ae60;font-size:0.75rem;">안전</span></h3>
+            <p style="font-size:0.85rem;color:#555;">말소기준: 근저당권설정(2004-11-15) | 인수 0건 / 소멸 14건 | 추가부담 없음 | 위험등급: 안전</p>
+            <p style="font-size:0.82rem;margin-top:0.3rem;">위험요소 없음</p>
+            <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <a href="북한산아이파크520동801호.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #3498db;border-radius:4px;text-decoration:none;color:#3498db;">📋 분석</a>
+                <a href="북한산아이파크520동801호_등기해석.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #8e44ad;border-radius:4px;text-decoration:none;color:#8e44ad;">📜 등기해석</a>
+                <a href="북한산아이파크520동801호_경매정보.html" style="font-size:0.75rem;padding:3px 8px;border:1px solid #e67e22;border-radius:4px;text-decoration:none;color:#e67e22;">⚖️ 경매정보</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>결론</h2>
+        <p>4건 중 안전 등급: <strong>1건</strong></p>
+        <p class="note">자동 분석 결과. 실제 투자 시 원본 확인 및 전문가 자문 권장.</p>
+    </div>
+</div></body></html>
